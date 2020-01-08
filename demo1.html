@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo1</title>
+    <style>
+        div,input{
+            padding:0; margin:0;
+        }
+        .clearx::after{
+                content:'';
+                display:block;   
+                clear: both;
+            }
+        .box{
+            border: solid black;
+            width: 400px;
+            height: 600px;
+            margin: 0 auto;
+        }
+        .box #display{
+            border-bottom:solid black;
+            width: 300px;
+            height: 200px;
+            float: left;
+        }
+        #txt{
+            width: 300px;
+            height: 200px;
+            border-style: none;
+            font-size: 50px;
+        }
+        .box .clear{
+            border-bottom:solid black;
+            width: 100px;
+            height: 200px;
+            float: left;
+            position: relative;
+        }
+        .box .clear .delete{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .delete .del{
+            width: 50px;
+            height: 50px;
+            font-size: 40px;
+            background-color: white;
+            border-color: black;
+            border-radius: 100%;
+            outline: none;
+        }
+        .box .key{
+            width: 400px;
+            height: 400px;
+            float: left;
+        }
+        .box .key  div{
+            height: 100px;
+            width: 100px;
+            float: left;
+            border-style:none;
+        }
+        .box .key input{
+            width: 80px;
+            height: 80px;
+            font-size: 40px;
+            border-radius: 100%;
+            margin-top: 10px;
+            margin-left: 10px;
+            outline: none;
+            background-color: white;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="clearx" >
+        <div id="display">
+            <input type="text" name="shu" id="txt">
+        </div>
+        <div class="clear">
+            <div class="delete">
+                <input type="submit" value="x" class="del"onclick="Clear(this)" >
+            </div>
+        </div>
+        <div class="key">
+            <div><input type="button" value="7" onclick="Event(this)"/></div>
+            <div><input type="button" value="8" onclick="Event(this)"></div>
+            <div><input type="button" value="9" onclick="Event(this)"></div>
+            <div><input type="button" value="+" onclick="Oper(this)"></div>
+            <div><input type="button" value="4" onclick="Event(this)"></div>
+            <div><input type="button" value="5" onclick="Event(this)"></div>
+            <div><input type="button" value="6" onclick="Event(this)"></div>
+            <div><input type="button" value="*" onclick="Oper(this)"></div>
+            <div><input type="button" value="1" onclick="Event(this)"></div>
+            <div><input type="button" value="2" onclick="Event(this)" ></div>
+            <div><input type="button" value="3" onclick="Event(this)"></div>
+            <div><input type="button" value="-" onclick="Oper(this)"></div>
+            <div><input type="button" value="0" onclick="Event(this)"></div>
+            <div><input type="button" value="." onclick="Event(this)"></div>
+            <div><input type="button" value="=" onclick="Result(this)"></div>
+            <div><input type="button" value="/"onclick="Oper(this)" ></div>
+        </div>
+    </div>
+    <script>
+        var val=0; //放置输入的值
+        var xval=0;//保存转换Number类型的值
+        var temp=0; //保存第一次输入的值   
+        var oper="";//保存输入的操作符
+
+        // 获取输入数字
+        function Event(e){
+
+            val=e.value
+            var txt=document.getElementById("txt");       
+            txt.value+=val; 
+            xval=parseFloat(txt.value);
+        }
+        // 清楚数据
+        function Clear(e){
+        var txt=document.getElementById("txt");
+        if(e.value=="x"){
+            txt.value="";
+        }
+    }
+        // 运算
+        function operation(){
+            this.suan=function(num1,num2,oper){
+                var res=0;
+                switch(oper){
+                    case "+":
+                        res=num1+num2;
+                        break;
+                    case "-":
+                        res=num1-num2;
+                        break;
+                    case "*":
+                        res=num1*num2;
+                        break;
+                    case "/":
+                        res=num1/num2;
+                        break;
+            }
+            return res;
+            }
+    }
+var operation=new operation();
+    // 运算符
+    function Oper(e){
+        oper=e.value;
+        if (e.value=="+"){
+            var txt=document.getElementById("txt");
+            temp=parseFloat(txt.value);
+            txt.value="";                       
+        }else if(e.value=="-"){
+            var txt=document.getElementById("txt");
+            temp=parseFloat(txt.value);
+            txt.value="";
+        }else if(e.value=="*"){
+            var txt=document.getElementById("txt");
+            temp=parseFloat(txt.value);
+            txt.value="";
+        }else if(e.value=="/"){
+            var txt=document.getElementById("txt");
+            temp=parseFloat(txt.value);
+            txt.value="";
+        }
+}
+// 运算结果
+function Result(e){
+    var txt=document.getElementById("txt");       
+    if(e.value=="="){
+        txt.value=operation.suan(temp,xval,oper);
+    }
+}
+    </script>
+</body>
+</html>
